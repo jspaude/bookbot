@@ -5,9 +5,16 @@ def main():
     count = wordcount(text)
     lower_case = case_conversion(count)
     chars_dict = get_chars_dict(text)
-    print(chars_dict)
-    #letter_count = dictionary_count(lower_case)
-    #print(letter_count)
+    chars_sorted_list = chars_dict_to_sorted_list(chars_dict)
+    print(f"--- Begin report of {file_path} ---")
+    print(f"{count} words found in the document")
+
+    for item in chars_sorted_list:
+        if not item["char"].isalpha():
+            continue
+        print(f"The '{item['char']}' character was found {item['num']} times")
+
+    print("--- End report ---")
     
 def contents(file_path):    
     with open(file_path) as f:
@@ -48,6 +55,30 @@ def get_chars_dict(text):
         else:
             chars[lowered] = 1
     return chars
+
+    
+
+
+def get_num_words(text):
+    words = text.split()
+    return len(words)
+
+
+def sort_on(d):
+    return d["num"]
+
+
+def chars_dict_to_sorted_list(num_chars_dict):
+    sorted_list = []
+    for ch in num_chars_dict:
+        sorted_list.append({"char": ch, "num": num_chars_dict[ch]})
+    sorted_list.sort(reverse=True, key=sort_on)
+    return sorted_list
+    
+    
+    #print(chars_list)
+
+
 
 main()
 '''
